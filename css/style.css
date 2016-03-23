@@ -1,0 +1,28 @@
+body {
+  background-image: url(http://i.kinja-img.com/gawker-media/image/upload/s--JU5CRm-V--/cgijibi93ptziudddqjv.gif);
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: cover;
+  background-color: #black;
+}
+
+#stopIncomingMessages {
+	position: fixed;
+	bottom:0px;
+	right:0px;
+}
+
+#hmm{
+  position: fixed;
+  bottom:0px;
+  left:0px;
+}
+
+tr:hover{
+  color: white;
+}
+
+tr:active{
+  color: gray;
+}
