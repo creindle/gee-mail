@@ -1,18 +1,83 @@
+<!-- Credits to Tanachi (https://github.com/Tanachi/gee-mail/blob/master/index.html) for the original .html file that I worked from.-->
 <html>
-	<head>
-		<script src="js/mail-generator.js"></script>
-		<link href="css/style.css" rel="stylesheet" media="screen">
-    <script>
-      window.onload = function(){
-        // ALL OF YOUR JAVASCRIPT CODE SHOULD GO HERE. 
-        // We have to use window.onload so your JavaScript doesn't execute until the page has loaded and all HTML has been downloaded to your browser
-        
-      };
-    </script>
-	</head>
-	<body>
-		<div class="container" id="main">
-			Build Me!
-		</div>
-	</body>
+<head>
+	<script src="js/mail-generator.js"></script>
+	<link href="css/style.css" rel="stylesheet" media="screen">
+	<script>
+
+	//Function that either stops or continues emails being added to the table
+	var incomingMessages = 1;
+	function stopIncomingMessages(){
+		if(incomingMessages == 1){
+			incomingMessages = 0;
+			document.getElementById("stopIncomingMessages").style.background = "gray";
+		}
+		else{
+			incomingMessages = 1;
+			document.getElementById("stopIncomingMessages").style.background = "";
+		}
+	}
+	// Hmm...
+	function hmm(){
+		window.alert("You found me! :D");
+	}
+
+	window.onload = function(){
+		var count = 1;
+
+		function addMessage(message){
+
+			//Creates the table from the mail-generator.js containing one row, for the email, with three columns for the sender, subject, and date
+			var table = document.getElementById("emailData");
+			var row = table.insertRow(0);
+			var sender = row.insertCell(0);
+			var subject = row.insertCell(1);
+			var date = row.insertCell(2);
+
+			//Fills in respected columns with respected information
+			sender.innerHTML = message.sender;
+			subject.innerHTML = message.subject;
+			date.innerHTML = message.date;
+
+			//Function that displays the message sender, subject, and body through a window alert when the user clicks on the row/email
+			row.onclick = (function() {
+				return function() {
+				window.alert("From: " + message.sender + "\nSubject: " + message.subject + "\n\n" +message.body);
+				}
+			})();
+
+			//Updates the count with the amount of rows/emails in the table
+			document.getElementById("emailCount").innerHTML ="Inbox: " + count;
+		}
+
+		//Displays the first email from the array
+		for (var z = 0; z < 1; z++){
+			var message = geemails[z];
+			addMessage(message);
+		}
+		
+		//Function that increases the inbox count and adds a new row/email to the table, if button Stop Incoming Messages is left on, every 4200 ms.
+		setInterval(function(){ 
+			if(incomingMessages == 1){
+				var newMail = getNewMessage();
+				count++; 
+				addMessage(newMail);
+			}
+		}, 4200);
+	};
+	</script>
+</head>
+<title> Gee Mail </title>
+<h1 Align = "Center"><a href="https://github.com/creindle/gee-mail" style="text-decoration:none" color = "black"> Gee Mail </a></h1>
+<body>
+	<button id="stopIncomingMessages" type="button" onclick="stopIncomingMessages()" >Stop Incoming Messages</button>
+	<button id="hmm" type="button" onclick="hmm()"></button>
+	<table Align = "Center">
+		<tr>
+			<td id="emailCount" type="button" onclick="window.close()"></td>
+		</tr>
+	</table>
+	<table Align = "Center" id ="emailData" >
+	</table>
+</body>
 </html>
